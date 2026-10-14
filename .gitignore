@@ -1,3 +1,5 @@
 .venv
 dataset
 dataset2
+.venv/
+*.npz
