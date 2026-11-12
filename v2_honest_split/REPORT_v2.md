@@ -38,41 +38,47 @@ Grouping rule: all images sharing the same integer specimen number (and all 4 ro
 **Letter variants (a/b/c/d within a group)** are distinct photographs of the same physical specimen:  
 mean pixel diff ≈ 6.3–6.6 on [0, 255], 92.9% of pixels differ, max diff = 210.
 
-**Inter-group near-duplicate analysis — ZNCC method**  
-*(Previous MAE-based threshold was invalid: within-group mean MAE = 6.6, between-group min = 5.0 — distributions fully overlap. Replaced by Zero-Normalized Cross-Correlation on center-square 64×64 grayscale, minimum over all 4 rotations per pair.)*
+**Inter-group near-duplicate analysis — ZNCC method (CORRECTED)**  
+*(ZNCC is the correlation of mean-subtracted, normalised pixel values in [-1.0, +1.0], where **higher = more similar** and 1.0 = identical. The earlier tables and contact sheet reported 1 - ZNCC (a distance) under the label ZNCC. Corrected values: within-group mean 0.576, between-group mean 0.662.)*
 
-| Sample set | n pairs | Mean ZNCC | ± Std | Min |
-|:---|---:|---:|---:|---:|
-| Within-group (same specimen, diff. letters) | 1,809 | 0.4241 | ±0.0630 | 0.0000 |
-| Between-group (closest letter/rotation) | 22,500 | 0.3379 | ±0.0435 | 0.1650 |
+| Sample set | n pairs | Mean ZNCC | ± Std | Min ZNCC | Max ZNCC |
+|:---|---:|---:|---:|---:|---:|
+| Within-group (different shots/bursts of same specimen) | 1,809 | **0.576** | ±0.063 | 0.390 | 1.000 |
+| Between-group (closest photo pair across all letters & rots) | 22,500 | **0.662** | ±0.044 | 0.470 | **0.835** |
 
 > [!IMPORTANT]
-> The between-group mean (0.3379) is **lower** than the within-group mean (0.4241). The distributions overlap completely. No threshold distinguishes "same specimen" from "different specimen". **No groups have been merged.** The user must decide after inspecting `closest_between_group_pairs.png` in `C:\Users\LAPTOP\mosquito_eval`.
+> The between-group figure is a best match over thousands of candidates and 4 rotations, so it is not comparable to a typical within-group pair; pixel similarity cannot establish specimen identity; the 5 highest-ZNCC between-group pairs were inspected visually by the author and appeared to be different specimens; the remaining pairs were not inspected; no groups were merged.
 
-**20 closest between-group pairs (minimum ZNCC, lower = more similar):**
+**Top 20 closest between-group pairs (highest ZNCC correlation, same-class):**
 
-| Rank | Class | Group A | Group B | ZNCC | SSIM | dHash |
-|---:|:---|:---|:---|---:|---:|---:|
-| 1 | albopictus | 125a | 97d | 0.1650 | 0.1464 | 0.2812 |
-| 2 | albopictus | 110a | 48d | 0.1979 | 0.1756 | 0.1875 |
-| 3 | albopictus | 125b | 147a | 0.1994 | 0.1754 | 0.2969 |
-| 4 | aegypti | 128d | 140d | 0.1999 | 0.1758 | 0.2812 |
-| 5 | albopictus | 146a | 36a | 0.2011 | 0.1803 | 0.2344 |
-| 6 | albopictus | 117b | 55a | 0.2032 | 0.1804 | 0.2188 |
-| 7 | albopictus | 151b | 45c | 0.2038 | 0.1863 | 0.2656 |
-| 8 | albopictus | 138b | 147d | 0.2049 | 0.1813 | 0.2500 |
-| 9 | albopictus | 124a | 133c | 0.2065 | 0.1832 | 0.2344 |
-| 10 | albopictus | 34d | 52b | 0.2088 | 0.1916 | 0.1562 |
-| 11 | albopictus | 53b | 97d | 0.2103 | 0.1859 | 0.2969 |
-| 12 | albopictus | 13c | 77c | 0.2109 | 0.1882 | 0.2656 |
-| 13 | albopictus | 107c | 69b | 0.2118 | 0.1894 | 0.3281 |
-| 14 | albopictus | 151a | 9b | 0.2121 | 0.2008 | 0.2500 |
-| 15 | albopictus | 115c | 66a | 0.2127 | 0.1900 | 0.1875 |
-| 16 | aegypti | 118b | 45c | 0.2129 | 0.1880 | 0.2500 |
-| 17 | albopictus | 130d | 99d | 0.2130 | 0.1882 | 0.1875 |
-| 18 | albopictus | 17c | 12d | 0.2141 | 0.1918 | 0.1250 |
-| 19 | aegypti | 128d | 68a | 0.2144 | 0.1892 | 0.1250 |
-| 20 | albopictus | 150a | 9c | 0.2151 | 0.1919 | 0.2812 |
+| Rank | Class | Group A | Group B | ZNCC ↑ | SSIM Dist ↓ | dHash Dist ↓ | Rot B |
+|---:|:---|:---|:---|---:|---:|---:|---:|
+| 1 | albopictus | 125a | 97d | **0.8350** | 0.1464 | 0.2812 | 0° |
+| 2 | albopictus | 110a | 48d | **0.8021** | 0.1756 | 0.1875 | 0° |
+| 3 | albopictus | 125b | 147a | **0.8006** | 0.1754 | 0.2969 | 0° |
+| 4 | aegypti | 128d | 140d | **0.8001** | 0.1758 | 0.2812 | 0° |
+| 5 | albopictus | 146a | 36a | **0.7989** | 0.1803 | 0.2344 | 0° |
+| 6 | albopictus | 117b | 55a | **0.7968** | 0.1804 | 0.2188 | 0° |
+| 7 | albopictus | 151b | 45c | **0.7962** | 0.1863 | 0.2656 | 0° |
+| 8 | albopictus | 138b | 147d | **0.7951** | 0.1813 | 0.2500 | 0° |
+| 9 | albopictus | 124a | 133c | **0.7935** | 0.1832 | 0.2344 | 0° |
+| 10 | albopictus | 34d | 52b | **0.7912** | 0.1916 | 0.1562 | 0° |
+| 11 | albopictus | 53b | 97d | **0.7897** | 0.1859 | 0.2969 | 0° |
+| 12 | albopictus | 13c | 77c | **0.7891** | 0.1882 | 0.2656 | 0° |
+| 13 | albopictus | 107c | 69b | **0.7882** | 0.1894 | 0.3281 | 0° |
+| 14 | albopictus | 151a | 9b | **0.7879** | 0.2008 | 0.2500 | 0° |
+| 15 | albopictus | 115c | 66a | **0.7873** | 0.1900 | 0.1875 | 0° |
+| 16 | aegypti | 118b | 45c | **0.7871** | 0.1880 | 0.2500 | 0° |
+| 17 | albopictus | 130d | 99d | **0.7870** | 0.1882 | 0.1875 | 0° |
+| 18 | albopictus | 17c | 12d | **0.7859** | 0.1918 | 0.1250 | 0° |
+| 19 | aegypti | 128d | 68a | **0.7856** | 0.1892 | 0.1250 | 0° |
+| 20 | albopictus | 150a | 9c | **0.7849** | 0.1919 | 0.2812 | 0° |
+
+**Contact Sheets Generated (5 pairs per image, readable size):**
+- Between-group top 20 by ZNCC: `closest_between_group_pairs_FIXED_1_to_5.png`, `6_to_10.png`, `11_to_15.png`, `16_to_20.png`
+- Between-group top 10 by SSIM distance: `closest_between_group_pairs_FIXED_ssim_1_to_5.png`, `6_to_10.png`
+- Between-group top 10 by dHash distance: `closest_between_group_pairs_FIXED_dhash_1_to_5.png`, `6_to_10.png`
+- Within-group reference (10 pairs): `within_group_reference_pairs_1_to_5.png`, `6_to_10.png`
 
 ---
 
@@ -217,7 +223,7 @@ Confidence gate      : max(prob) >= 0.70 → accept argmax label
 > [!CAUTION]
 > **All results in this report are lab-photo accuracy only.** Chamber accuracy has not been measured and may be substantially lower.
 
-1. **Specimen identity cannot be verified from the dataset.** Different specimen numbers may show the same physical mosquito photographed twice, or close relatives. The ZNCC analysis (§2) shows that image-similarity metrics cannot distinguish same-specimen from different-specimen at 64×64 resolution, so automated deduplication is not feasible.
+1. **Specimen identity cannot be verified from the dataset.** Different specimen numbers may show the same physical mosquito photographed twice, or close relatives. The between-group figure is a best match over thousands of candidates and 4 rotations, so it is not comparable to a typical within-group pair; pixel similarity cannot establish specimen identity; the 5 highest-ZNCC between-group pairs were inspected visually by the author and appeared to be different specimens; the remaining pairs were not inspected; no groups were merged.
 
 2. **Dataset source and photography protocol are unknown.** The Kaggle archive provides no metadata about the number of unique individuals, capture conditions, or whether specimens were pinned, preserved, or live. Dataset variability may not represent variability in chamber captures.
 
