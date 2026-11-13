@@ -47,7 +47,7 @@ mean pixel diff ≈ 6.3–6.6 on [0, 255], 92.9% of pixels differ, max diff = 21
 | Between-group (closest photo pair across all letters & rots) | 22,500 | **0.662** | ±0.044 | 0.470 | **0.835** |
 
 > [!IMPORTANT]
-> The between-group figure is a best match over thousands of candidates and 4 rotations, so it is not comparable to a typical within-group pair; pixel similarity cannot establish specimen identity; the 5 highest-ZNCC between-group pairs were inspected visually by the author and appeared to be different specimens; the remaining pairs were not inspected; no groups were merged.
+> The between-group figure is a best match over thousands of candidates and 4 rotations, so it is not comparable to a typical within-group pair; pixel similarity cannot establish specimen identity; the 5 highest-ZNCC between-group pairs were inspected visually by the author; the specimens were damaged (detached legs, scattered parts), so whether they are the same specimen could not be determined; the remaining pairs were not inspected; no groups were merged. Cross-fold specimen leakage therefore cannot be ruled out, and the reported accuracy may be optimistic by an unknown amount.
 
 **Top 20 closest between-group pairs (highest ZNCC correlation, same-class):**
 
@@ -223,7 +223,7 @@ Confidence gate      : max(prob) >= 0.70 → accept argmax label
 > [!CAUTION]
 > **All results in this report are lab-photo accuracy only.** Chamber accuracy has not been measured and may be substantially lower.
 
-1. **Specimen identity cannot be verified from the dataset.** Different specimen numbers may show the same physical mosquito photographed twice, or close relatives. The between-group figure is a best match over thousands of candidates and 4 rotations, so it is not comparable to a typical within-group pair; pixel similarity cannot establish specimen identity; the 5 highest-ZNCC between-group pairs were inspected visually by the author and appeared to be different specimens; the remaining pairs were not inspected; no groups were merged.
+1. **Specimen identity cannot be verified from the dataset.** Different specimen numbers may show the same physical mosquito photographed twice, or close relatives. The between-group figure is a best match over thousands of candidates and 4 rotations, so it is not comparable to a typical within-group pair; pixel similarity cannot establish specimen identity; the 5 highest-ZNCC between-group pairs were inspected visually by the author; the specimens were damaged (detached legs, scattered parts), so whether they are the same specimen could not be determined; the remaining pairs were not inspected; no groups were merged. Cross-fold specimen leakage therefore cannot be ruled out, and the reported accuracy may be optimistic by an unknown amount.
 
 2. **Dataset source and photography protocol are unknown.** The Kaggle archive provides no metadata about the number of unique individuals, capture conditions, or whether specimens were pinned, preserved, or live. Dataset variability may not represent variability in chamber captures.
 
